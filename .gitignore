@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+
+# Python environment / pip
+Lib/
+Scripts/
+Include/
+pip-log.txt
+
+# OS
+.DS_Store
+Thumbs.db
