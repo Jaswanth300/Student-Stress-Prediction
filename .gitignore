@@ -1,13 +1,19 @@
-# Python
-__pycache__/
-*.pyc
-
-# Python environment / pip
+# Python virtual environment / local installs
 Lib/
 Scripts/
 Include/
-pip-log.txt
 
-# OS
+# Python cache
+__pycache__/
+*.pyc
+
+# OS junk
 .DS_Store
 Thumbs.db
+
+# IDE
+.vscode/
+
+# Plots / output
+*.png
+
