@@ -1,4 +1,8 @@
 # 🧠 Student Stress Prediction using Machine Learning
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![Machine Learning](https://img.shields.io/badge/Machine-Learning-green)
+![Model](https://img.shields.io/badge/Model-Decision%20Tree-orange)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 
 A Machine Learning project that predicts student stress levels based on academic and lifestyle factors using a Decision Tree classifier.
 
