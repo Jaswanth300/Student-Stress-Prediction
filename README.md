@@ -72,9 +72,20 @@ python stress_prediction.py
 
 ## 📊 Model Details
 
+## 📊 Model Evaluation
+
 - Algorithm: Decision Tree Classifier  
 - Train-Test Split: 80/20  
-- Evaluation Metric: Accuracy Score  
+- Accuracy Score  
+- Confusion Matrix Visualization  
+
+The confusion matrix provides a detailed breakdown of model performance across stress levels (Low / Medium / High), allowing better understanding beyond accuracy alone.
+
+## 📈 Output
+
+- Prints model accuracy
+- Displays confusion matrix heatmap
+- Predicts stress level for sample input
 
 ---
 
