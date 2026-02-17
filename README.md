@@ -99,6 +99,9 @@ The confusion matrix provides a detailed breakdown of model performance across s
 - Compare with Random Forest & SVM  
 - Add visualization dashboard  
 - Deploy as a web app  
+- Analyze behavioral data patterns for early mental health risk detection
+- Explore secure data handling and privacy-preserving ML techniques
+- Integrate anomaly detection for abnormal stress behavior tracking
 
 ---
 
