@@ -35,6 +35,18 @@ plt.ylabel("Actual")
 plt.title("Confusion Matrix")
 plt.show()
 
+# Feature Importance
+importances = model.feature_importances_
+features = X.columns
+
+plt.figure()
+plt.bar(features, importances)
+plt.xlabel("Features")
+plt.ylabel("Importance")
+plt.title("Feature Importance in Stress Prediction")
+plt.show()
+
+
 # Test with sample input
 sample = [[6, 5]]
 prediction = model.predict(sample)
