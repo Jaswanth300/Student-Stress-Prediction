@@ -1,4 +1,7 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import confusion_matrix
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -22,6 +25,15 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 
 print("Model Accuracy:", accuracy_score(y_test, y_pred))
+# Confusion Matrix
+cm = confusion_matrix(y_test, y_pred)
+
+plt.figure()
+sns.heatmap(cm, annot=True, fmt='d')
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.title("Confusion Matrix")
+plt.show()
 
 # Test with sample input
 sample = [[6, 5]]
