@@ -1,3 +1,5 @@
+## 🌐 Live Demo
+[Click here to try the app]https://student-stress-prediction-drae.onrender.com
 # 📊 Student Stress Prediction using Machine Learning
 
 ## 🧠 Abstract
