@@ -16,8 +16,21 @@ df = pd.read_csv("student_stress_dataset.csv")
 # Encode target variable
 le = LabelEncoder()
 df["Stress_Level"] = le.fit_transform(df["Stress_Level"])
+# ==============================
+# Feature Engineering
+# ==============================
 
-X = df[["Study_Hours", "Sleep_Hours"]]
+df["Study_Sleep_Ratio"] = df["Study_Hours"] / df["Sleep_Hours"]
+df["Sleep_Deficit"] = (df["Sleep_Hours"] < 5).astype(int)
+df["Academic_Load_Index"] = df["Study_Hours"] * (10 - df["Sleep_Hours"])
+
+X = df[[
+    "Study_Hours",
+    "Sleep_Hours",
+    "Study_Sleep_Ratio",
+    "Sleep_Deficit",
+    "Academic_Load_Index"
+]]
 y = df["Stress_Level"]
 
 # Train-test split (stratified)
@@ -26,35 +39,76 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # Models dictionary
-models = {
-    "Logistic Regression": LogisticRegression(max_iter=1000),
-    "Decision Tree": DecisionTreeClassifier(),
-    "Random Forest": RandomForestClassifier(),
-    "SVM": SVC(probability=True)
-}
+from sklearn.model_selection import GridSearchCV
 
+models = {
+    "Logistic Regression": (
+        LogisticRegression(max_iter=1000),
+        {
+            "classifier__C": [0.1, 1, 10]
+        }
+    ),
+    "Decision Tree": (
+        DecisionTreeClassifier(),
+        {
+            "classifier__max_depth": [None, 5, 10],
+            "classifier__min_samples_split": [2, 5]
+        }
+    ),
+    "Random Forest": (
+        RandomForestClassifier(),
+        {
+            "classifier__n_estimators": [50, 100],
+            "classifier__max_depth": [None, 10]
+        }
+    ),
+    "SVM": (
+        SVC(probability=True),
+        {
+            "classifier__C": [0.1, 1, 10],
+            "classifier__kernel": ["linear", "rbf"]
+        }
+    )
+}
 results = []
 
-for name, model in models.items():
+for name, (model, param_grid) in models.items():
+
     pipeline = Pipeline([
         ("scaler", StandardScaler()),
         ("classifier", model)
     ])
 
-    pipeline.fit(X_train, y_train)
-    y_pred = pipeline.predict(X_test)
+    grid = GridSearchCV(
+        pipeline,
+        param_grid,
+        cv=5,
+        scoring="accuracy"
+    )
+
+    grid.fit(X_train, y_train)
+
+    best_model = grid.best_estimator_
+    y_pred = best_model.predict(X_test)
 
     acc = accuracy_score(y_test, y_pred)
     prec = precision_score(y_test, y_pred, average="weighted")
     rec = recall_score(y_test, y_pred, average="weighted")
     f1 = f1_score(y_test, y_pred, average="weighted")
 
-    cv_score = cross_val_score(pipeline, X, y, cv=5).mean()
+    results.append([name, acc, prec, rec, f1, grid.best_score_])
 
-    results.append([name, acc, prec, rec, f1, cv_score])
+    joblib.dump(best_model, f"models/{name.replace(' ', '_')}.pkl")
+
+results_df = pd.DataFrame(results, columns=[
+    "Model", "Accuracy", "Precision", "Recall", "F1-Score", "Best CV Score"
+])
+
+print("\nTuned Model Comparison Results:\n")
+print(results_df.sort_values(by="Accuracy", ascending=False))
 
     # Save model
-    joblib.dump(pipeline, f"models/{name.replace(' ', '_')}.pkl")
+joblib.dump(pipeline, f"models/{name.replace(' ', '_')}.pkl")
 
 # Display results
 results_df = pd.DataFrame(results, columns=[
