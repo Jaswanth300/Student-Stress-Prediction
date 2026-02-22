@@ -1,117 +1,139 @@
-# 🧠 Student Stress Prediction using Machine Learning
-![Python](https://img.shields.io/badge/Python-3.12-blue)
-![Machine Learning](https://img.shields.io/badge/Machine-Learning-green)
-![Model](https://img.shields.io/badge/Model-Decision%20Tree-orange)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen)
+# 📊 Student Stress Prediction using Machine Learning
 
-A Machine Learning project that predicts student stress levels based on academic and lifestyle factors using a Decision Tree classifier.
+## 🧠 Abstract
+This project presents a comparative analysis of multiple machine learning models to predict student stress levels based on lifestyle indicators such as study hours and sleep hours. The study evaluates model robustness, generalization capability, and classification performance using structured evaluation metrics.
 
 ---
 
-## 📌 Project Overview
-
-Stress among students is a growing concern.  
-This project analyzes key features such as:
-
-- Study Hours  
-- Sleep Duration  
-- Academic Pressure  
-- Social Interaction  
-- Screen Time  
-
-and predicts the **stress level (Low / Medium / High)** using a supervised ML model.
+## 🎯 Problem Statement
+Student stress is influenced by academic workload and sleep patterns. The objective of this project is to build a classification system that predicts stress levels (Low, Medium, High) using supervised machine learning techniques.
 
 ---
 
-## 🚀 Tech Stack
+## 📁 Dataset Description
 
-- Python 3.12  
-- Pandas  
-- NumPy  
-- Scikit-learn  
-- Matplotlib  
-- Decision Tree Classifier  
+- Total Samples: 300
+- Features:
+  - Study_Hours
+  - Sleep_Hours
+- Target:
+  - Stress_Level (Low, Medium, High)
 
----
-
-## 📂 Project Structure
-
-```
-Student-Stress-Prediction/
-│
-├── data/
-│   └── stress_data.csv
-│
-├── stress_prediction.py
-├── requirements.txt
-└── README.md
-```
+The dataset was synthetically generated using rule-based logic combined with controlled randomness to simulate realistic academic stress conditions.
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Methodology
 
-Clone the repository:
+1. Data preprocessing and label encoding
+2. Stratified train-test split (80-20)
+3. Feature scaling using StandardScaler
+4. Model training using:
+   - Logistic Regression
+   - Decision Tree
+   - Random Forest
+   - Support Vector Machine (SVM)
+5. Model evaluation using:
+   - Accuracy
+   - Precision
+   - Recall
+   - F1-score
+   - 5-fold Cross Validation
+6. Visualization:
+   - Confusion Matrix
+   - ROC Curve
+   - Correlation Heatmap
 
-```
-git clone https://github.com/Jaswanth300/Student-Stress-Prediction.git
+---
+
+## 📊 Model Comparison Results
+
+| Model | Accuracy | Cross-Val Score |
+|-------|----------|----------------|
+| Decision Tree | 0.60 | 0.53 |
+| Random Forest | 0.58 | 0.54 |
+| SVM | 0.58 | 0.58 |
+| Logistic Regression | 0.51 | 0.50 |
+
+SVM demonstrated better generalization performance based on cross-validation scores.
+
+---
+
+## 📈 Visualizations
+
+### Confusion Matrix
+![Confusion Matrix](reports/confusion_matrix.png)
+
+### ROC Curve
+![ROC Curve](reports/roc_curve.png)
+
+### Correlation Heatmap
+![Heatmap](reports/correlation_heatmap.png)
+
+---
+
+## 🛠 Tech Stack
+
+- Python 3.11
+- Pandas
+- NumPy
+- Scikit-learn
+- Matplotlib
+- Seaborn
+- Joblib
+
+---
+
+## 🚀 How to Run
+
+Clone repository:
+git clone https://github.com/Jaswanth300/Student-Stress-Prediction
+
 cd Student-Stress-Prediction
-```
 
 Install dependencies:
-
-```
 pip install -r requirements.txt
-```
+
+
+Train models:
+python src/train.py
+
+
+Generate visualizations:
+python src/visualize.py
+
 
 ---
 
-## ▶️ Run the Project
+## 🌍 Real-World Applications
 
-```
-python stress_prediction.py
-```
-
----
-
-## 📊 Model Details
-
-## 📊 Model Evaluation
-
-- Algorithm: Decision Tree Classifier  
-- Train-Test Split: 80/20  
-- Accuracy Score  
-- Confusion Matrix Visualization  
-
-The confusion matrix provides a detailed breakdown of model performance across stress levels (Low / Medium / High), allowing better understanding beyond accuracy alone.
-
-## 📈 Output
-
-- Prints model accuracy
-- Displays confusion matrix heatmap
-- Predicts stress level for sample input
+- Academic performance monitoring systems
+- Student mental health analytics dashboards
+- Early intervention systems in educational institutions
+- AI-assisted academic advisory tools
 
 ---
 
-## 📈 Future Improvements
+## ⚠️ Limitations
 
-- Improve dataset size  
-- Compare with Random Forest & SVM  
-- Add visualization dashboard  
-- Deploy as a web app  
-- Analyze behavioral data patterns for early mental health risk detection
-- Explore secure data handling and privacy-preserving ML techniques
-- Integrate anomaly detection for abnormal stress behavior tracking
+- Synthetic dataset
+- Only two features used
+- Not validated on real-world student data
 
 ---
 
-## 🎯 Learning Outcome
+## 🔮 Future Improvements
 
-- Hands-on ML workflow  
-- Data preprocessing  
-- Model training & evaluation  
-- GitHub project structuring  
+- Integrate real-world survey dataset
+- Add additional features (social activity, screen time, deadlines)
+- Implement deep learning models
+- Deploy as a web-based stress prediction tool
+- Add fairness & bias analysis
 
 ---
 
-⭐ Built as part of foundational Machine Learning practice.
+## 👨‍💻 Author
+
+Jaswanth  
+B.Tech – Artificial Intelligence & Data Science  
+GitHub-focused ML & Security Projects
