@@ -59,6 +59,33 @@ SVM demonstrated better generalization performance based on cross-validation sco
 
 ---
 
+## 🔧 Hyperparameter Optimization
+
+GridSearchCV was applied to tune hyperparameters for all models using 5-fold cross-validation.
+
+Key tuned parameters:
+
+- Logistic Regression → Regularization strength (C)
+- Decision Tree → max_depth, min_samples_split
+- Random Forest → n_estimators, max_depth
+- SVM → C, kernel type (linear, rbf)
+
+Despite optimization, performance improvements were marginal due to dataset simplicity and limited feature space.
+
+This suggests model performance is constrained more by data complexity than model capacity.
+
+## 📌 Performance Analysis
+
+Despite hyperparameter tuning and feature engineering, model performance plateaued around 58–60% accuracy.
+
+This suggests that the dataset's intrinsic structure and synthetic label generation logic limit achievable performance. The engineered features were largely derived transformations of original variables, providing limited additional information gain.
+
+This highlights an important machine learning principle:
+
+Model performance is often constrained more by data quality and feature diversity than algorithm complexity.
+
+---
+
 ## 📈 Visualizations
 
 ### Confusion Matrix
