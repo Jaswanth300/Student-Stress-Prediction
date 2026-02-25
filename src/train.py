@@ -1,21 +1,26 @@
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split, cross_val_score
+import os
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.pipeline import Pipeline
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 import joblib
 
-# Load dataset
+# ==============================
+# Load Dataset
+# ==============================
+
 df = pd.read_csv("student_stress_dataset.csv")
 
-# Encode target variable
+# Encode target
 le = LabelEncoder()
 df["Stress_Level"] = le.fit_transform(df["Stress_Level"])
+
 # ==============================
 # Feature Engineering
 # ==============================
@@ -31,22 +36,25 @@ X = df[[
     "Sleep_Deficit",
     "Academic_Load_Index"
 ]]
+
 y = df["Stress_Level"]
 
-# Train-test split (stratified)
+# ==============================
+# Train-Test Split
+# ==============================
+
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
-# Models dictionary
-from sklearn.model_selection import GridSearchCV
+# ==============================
+# Models + Hyperparameter Grid
+# ==============================
 
 models = {
     "Logistic Regression": (
         LogisticRegression(max_iter=1000),
-        {
-            "classifier__C": [0.1, 1, 10]
-        }
+        {"classifier__C": [0.1, 1, 10]}
     ),
     "Decision Tree": (
         DecisionTreeClassifier(),
@@ -70,7 +78,15 @@ models = {
         }
     )
 }
+
 results = []
+best_overall_model = None
+best_accuracy = 0
+best_model_name = ""
+
+# ==============================
+# Training Loop
+# ==============================
 
 for name, (model, param_grid) in models.items():
 
@@ -90,30 +106,34 @@ for name, (model, param_grid) in models.items():
 
     best_model = grid.best_estimator_
     y_pred = best_model.predict(X_test)
-
     acc = accuracy_score(y_test, y_pred)
-    prec = precision_score(y_test, y_pred, average="weighted")
-    rec = recall_score(y_test, y_pred, average="weighted")
-    f1 = f1_score(y_test, y_pred, average="weighted")
 
-    results.append([name, acc, prec, rec, f1, grid.best_score_])
+    results.append([name, acc, grid.best_score_])
 
-    joblib.dump(best_model, f"models/{name.replace(' ', '_')}.pkl")
+    if acc > best_accuracy:
+        best_accuracy = acc
+        best_overall_model = best_model
+        best_model_name = name
+
+# ==============================
+# Save ONLY Best Model
+# ==============================
+
+if not os.path.exists("models"):
+    os.makedirs("models")
+
+joblib.dump(best_overall_model, "models/best_model.pkl")
+
+# ==============================
+# Print Results
+# ==============================
 
 results_df = pd.DataFrame(results, columns=[
-    "Model", "Accuracy", "Precision", "Recall", "F1-Score", "Best CV Score"
+    "Model", "Accuracy", "Best CV Score"
 ])
 
 print("\nTuned Model Comparison Results:\n")
 print(results_df.sort_values(by="Accuracy", ascending=False))
 
-    # Save model
-joblib.dump(pipeline, f"models/{name.replace(' ', '_')}.pkl")
-
-# Display results
-results_df = pd.DataFrame(results, columns=[
-    "Model", "Accuracy", "Precision", "Recall", "F1-Score", "Cross-Val Score"
-])
-
-print("\nModel Comparison Results:\n")
-print(results_df.sort_values(by="Accuracy", ascending=False))
+print(f"\nBest Model: {best_model_name}")
+print("Saved as models/best_model.pkl")
