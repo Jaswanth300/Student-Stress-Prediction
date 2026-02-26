@@ -1,6 +1,8 @@
-## 🌐 Live Demo
-[Click here to try the app]https://student-stress-prediction-drae.onrender.com
 # 📊 Student Stress Prediction using Machine Learning
+
+## 🌐 Live Demo
+🔗 https://student-stress-prediction-l1vi.onrender.com
+> ⚡ Deployed using Flask + Gunicorn + Render (Python 3.11)
 
 ## 🧠 Abstract
 This project presents a comparative analysis of multiple machine learning models to predict student stress levels based on lifestyle indicators such as study hours and sleep hours. The study evaluates model robustness, generalization capability, and classification performance using structured evaluation metrics.
